@@ -1,0 +1,20 @@
+{literal}
+<script>
+    $(function() {
+
+        $('#multiprocessing_select_all').click(function(ev) {
+           if ($(this).is(':checked'))
+            $('tbody input[type="checkbox"].multicheck:not(:disabled)').prop('checked', true);
+           else
+            $('tbody input[type="checkbox"].multicheck:not(:disabled)').prop('checked', false);
+        });
+        
+        $('#multiprocessing_generate').click(function (e) {
+            e.preventDefault();
+            var checkboxes = $('input[type="checkbox"][name="multicmd[]"]:checked').map(function(){return this.value;});
+            location.href = $(this).attr('href') + '?cmd=' + checkboxes.get().join(',');
+        });
+
+    });
+</script>
+{/literal}

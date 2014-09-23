@@ -1,0 +1,90 @@
+<div class="row">
+    <div class="col-md-12 general-block-decorator">
+        <div class="row">
+            <div class="col-md-12 title title-without-tabs">
+                {intl d='multiprocessing.ai' l="Generate sticker"}
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="row">
+                <div class="col-md-12">
+                    <form action="{url path="/admin/module/MultiProcessing/generate"}" method="post">                       
+                        <div class="row inner-toolbar">
+                            <div class="col-md-offset-6 col-md-6 inner-actions text-right">
+                                <button type="submit" name="export" class="form-submit-button btn btn-sm btn-default btn-info" title="{intl l='Generate'}">{intl l='Generate'} <span class="glyphicon glyphicon-cloud-download"></span></button>
+                                <a href="{url path='/admin/modules'}" class="page-close-button btn btn-sm btn-default">{intl l='Close'} <span class="glyphicon glyphicon-remove"></span></a>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                {ifloop rel="order-list"}
+                                <table class="table table-striped table-condensed table-left-aligned">
+                                    <caption class="clearfix">
+                                       {intl l='Orders'}
+                                    </caption>
+                                    <thead>
+                                        <tr>
+                                            <th class="object-title"><input type="checkbox" name="select_all" id="select_all" value="" /></th>
+                                            <th class="object-title">{intl l='ID'}</th>
+                                            <th class="object-title">{intl l='Reference'}</th>
+                                            <th class="object-title">{intl l='Date & Hour'}</th>
+                                            <th class="object-title">{intl l='Company'}</th>
+                                            <th class="object-title">{intl l='Cutomer Name'}</th>
+                                            <th class="object-title text-right">{intl l='Amount'}</th>
+                                            <th class="actions">{intl l="Actions"}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                        {loop type="order" name="order-list" customer="*" order=$orders_order backend_context="1" status=2 }
+        
+                                            {loop type="currency" name="order-currency" id=$CURRENCY}
+                                                {$orderCurrency=$SYMBOL}
+                                            {/loop}
+        
+                                            {loop type="order_address" name="order-invoice-address" id=$INVOICE_ADDRESS}
+                                                {assign "orderInvoiceFirstName" $FIRSTNAME}
+                                                {assign "orderInvoiceLastName" $LASTNAME}
+                                                {assign "orderInvoiceCompany" $COMPANY}
+                                            {/loop}
+        
+                                            {loop type="order-status" name="order-status" id=$STATUS}
+                                                {assign "orderStatus" $TITLE}
+                                                {assign "orderStatusLabel" "order_$CODE"}
+                                            {/loop}
+        
+                                            <tr>
+                                                <td><input type="checkbox" name="cmd[]" value="{$ID}" autocomplete="off" /></td>
+                                                <td><a href="{url path="/admin/order/update/$ID"}">{$ID}</a></td>
+                                                <td><a href="{url path="/admin/order/update/$ID"}">{$REF}</a></td>
+                                                <td>{format_date date=$CREATE_DATE}</td>
+                                                <td>{$orderInvoiceCompany}</td>
+                                                <td><a href="{url path='/admin/customer/update' customer_id=$CUSTOMER}">{$orderInvoiceFirstName|ucwords} {$orderInvoiceLastName|upper}</a></td>
+                                                <td class="text-right">{format_money number=$TOTAL_TAXED_AMOUNT symbol=$orderCurrency}</td>
+                                                <td class="text-right">
+                                                    <div class="btn-group">
+                                                        <a class="btn btn-default btn-xs" title="{intl l='Generate'}" href="{url path="/admin/module/MultiProcessing/generate?cmd=$ID"}"><span class="glyphicon glyphicon-cloud-download"></span></a>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        {/loop}
+        
+                                    </tbody>
+                                </table>
+                                {/ifloop}
+                            </div>
+                        </div>
+                        
+                        <div class="row inner-toolbar inner-toolbar-bottom">
+                            <div class="col-md-offset-6 col-md-6 inner-actions text-right">
+                                <button type="submit" name="export" class="form-submit-button btn btn-sm btn-default btn-info" title="{intl l='Generate'}">{intl l='Generate'} <span class="glyphicon glyphicon-cloud-download"></span></button>
+                                <a href="{url path='/admin/modules'}" class="page-close-button btn btn-sm btn-default">{intl l='Close'} <span class="glyphicon glyphicon-remove"></span></a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

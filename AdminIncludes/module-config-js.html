@@ -1,0 +1,14 @@
+{if $module_code == 'MultiProcessing'}
+<script>
+    $(function() {
+
+        $('#select_all').click(function(ev) {
+           if ($(this).is(':checked'))
+            $('tbody input[type="checkbox"]').prop('checked', true);
+           else
+            $('tbody input[type="checkbox"]').prop('checked', false);
+        });
+
+    });
+</script>
+{/if}
